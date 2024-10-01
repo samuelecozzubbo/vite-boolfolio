@@ -5,13 +5,16 @@ import axios from 'axios';
         data(){
           return{
             projects:[],
+            isLoading:true,
           }
         },
         methods:{
           getApi(apiUrl){
+            this.isLoading = true;
             axios.get(apiUrl)
             .then(result=>{
-              this.projects = result.data.results;
+              this.projects = result.data.results.data;
+              this.isLoading = false;
               console.log(this.projects);
             })
             .catch(error=>{
@@ -28,6 +31,18 @@ import axios from 'axios';
 
 <template>
     <h1>Progetti</h1>
+    <div class="container">
+      <div v-if="isLoading" class="loading">
+        Caricamento
+      </div>
+      <div v-else>
+        <ul>
+          <li v-for="project in projects" :key="project.id">
+            <h5>{{ project.title }}</h5>
+          </li>
+        </ul>
+      </div>
+    </div>
 </template>
 
 <style lang="scss">
