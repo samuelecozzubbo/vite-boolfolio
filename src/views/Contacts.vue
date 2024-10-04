@@ -12,12 +12,13 @@ import axios from 'axios';
                     email:[],
                     message:[],
                 },
+                sent:false,
             }
         },
         methods:{
             sendForm(){
                 //console.log(this.name);
-                this.sending=true;
+                this.sent = true;
 
                 const data = {
                     name: this.name,
@@ -42,6 +43,7 @@ import axios from 'axios';
                     })
                     .catch( er => {
                       console.log(er.message);
+                      this.sent = false;
                       
                     })
               
@@ -53,7 +55,7 @@ import axios from 'axios';
 <template>
   <div class="container">
     <h1>Contacts</h1>
-    <form  action="#" @submit.prevent="sendForm">
+    <form v-if="!sent" action="#" @submit.prevent="sendForm">
         <div>
             <label for="name">Nome</label>
             <input v-model="name" type="text" id="name" placeholder="Nome">
@@ -72,6 +74,7 @@ import axios from 'axios';
         <button type="submit">Invia</button>
         <button type="reset">Annulla</button>
     </form>
+    <h2 v-else>Mesaggio inviato correttamente</h2>
   </div>
 </template>
 
