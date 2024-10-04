@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import About from '../views/About.vue';
 import Projects from '../views/Projects.vue';
+import ProjectDetail from '../views/ProjectDetail.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,12 @@ const router = createRouter({
       path: '/projects',
       name: 'projects',
       component: Projects
+    },
+    {
+      //PASSO IL PARAMETRO DINAMICO
+      path: '/dettaglio-progetto/:slug',
+      name: 'projectdetail',
+      component: ProjectDetail
     },
   ]
 })

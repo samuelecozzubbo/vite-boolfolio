@@ -57,9 +57,11 @@ import axios from 'axios';
       <div class="wrapper" v-else>
         <div class="project-lis">
           <ul>
-          <li v-for="project in projects" :key="project.id">
-            <h5>{{ project.title }}</h5>
-          </li>
+            <li v-for="project in projects" :key="project.id">
+              <router-link  :to="{name: 'projectdetail', params:{slug: project.slug}}">
+                <h5>{{ project.title }}</h5>
+              </router-link>
+            </li>
           </ul>
           <div class="paginator">
               <button
@@ -93,6 +95,13 @@ import axios from 'axios';
 </template>
 
 <style lang="scss">
+a{
+  color: white;
+  text-decoration: none;
+  &:hover{
+    color: aqua;
+  }
+}
 .paginator{
     display: flex;
     justify-content: flex-start;
