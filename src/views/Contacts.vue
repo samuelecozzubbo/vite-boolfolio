@@ -1,13 +1,32 @@
 <script>
     export default{
-        name:'Contacts'
-    }
+        name:'Contacts',
+        data(){
+            return{
+                name:'',
+                email:'',
+                message:'',
+            }
+        },
+        methods:{
+            sendForm(){
+                //console.log(this.name);
+                this.sending=true;
+
+                const data = {
+                    name: this.name,
+                    email: this.email,
+                    message: this.message
+                } 
+            },
+        }
+}
 </script>
 
 <template>
   <div class="container">
     <h1>Contacts</h1>
-    <form  action="#">
+    <form  action="#" @submit.prevent="sendForm">
         <div>
             <label for="name">Nome</label>
             <input v-model="name" type="text" id="name" placeholder="Nome">
