@@ -6,6 +6,10 @@ import axios from 'axios';
           return{
             projects:[],
             isLoading:true,
+            paginatorData:{
+                    current_page:1,
+                    links:[],
+                },
           }
         },
         methods:{
@@ -15,6 +19,9 @@ import axios from 'axios';
             .then(result=>{
               this.projects = result.data.results.data;
               this.isLoading = false;
+              //paginator
+              this.paginatorData.current_page = result.data.results.current_page;
+              this.paginatorData.links = result.data.results.links;
               console.log(this.projects);
             })
             .catch(error=>{
@@ -35,16 +42,59 @@ import axios from 'axios';
       <div v-if="isLoading" class="loading">
         Caricamento
       </div>
-      <div v-else>
-        <ul>
+      <div class="wrapper" v-else>
+        <div class="project-lis">
+          <ul>
           <li v-for="project in projects" :key="project.id">
             <h5>{{ project.title }}</h5>
           </li>
-        </ul>
+          </ul>
+          <div class="paginator">
+              <button
+                  v-for="(link,index) in paginatorData.links"
+                  :key="index"
+                  v-html="link.label"
+                  :disabled="link.active || !link.url"
+                  @click="getApi(link.url)">
+              </button>  
+          </div>
+        </div>
+        <div class="attributes">
+          <div class="types box">
+            <ul>Tipi
+              <li>tipo</li>
+            </ul>
+          </div>
+          <div class="technologies box">
+            <ul>Tecnologie
+              <li>
+                tecnologie
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 </template>
 
 <style lang="scss">
+.paginator{
+    display: flex;
+    justify-content: flex-start;
 
+    button{
+        margin: 0 2px;
+    }
+}
+
+.wrapper{
+  display: flex;
+}
+
+.box{
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid white;
+  margin-bottom: 10px;
+}
 </style>
