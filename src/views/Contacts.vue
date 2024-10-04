@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios';
     export default{
         name:'Contacts',
         data(){
@@ -17,7 +18,14 @@
                     name: this.name,
                     email: this.email,
                     message: this.message
-                } 
+                }
+
+                //chiamo con axios api store
+                axios.post('http://127.0.0.1:8000/api/send-email', data)
+                    .then(res=>{
+                      console.log(res.data);
+                    })
+              
             },
         }
 }
