@@ -11,6 +11,7 @@ import axios from 'axios';
                     links:[],
                 },
             types:[],
+            technologies:[],
           }
         },
         methods:{
@@ -40,6 +41,7 @@ import axios from 'axios';
         mounted(){
           this.getApi('http://127.0.0.1:8000/api','projects');
           this.getApi('http://127.0.0.1:8000/api/types','types');
+          this.getApi('http://127.0.0.1:8000/api/technologies','technologies');
 
         }
     }
@@ -80,8 +82,8 @@ import axios from 'axios';
           </div>
           <div class="technologies box">
             <ul>Tecnologie
-              <li>
-                tecnologie
+              <li v-for="technology in technologies" :key="technology.id">
+                {{ technology.name }}
               </li>
             </ul>
           </div>
@@ -104,10 +106,16 @@ import axios from 'axios';
   display: flex;
 }
 
-.box{
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid white;
-  margin-bottom: 10px;
+.attributes{
+  display: flex;
+  gap: 10px;
+    .box{
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid white;
+      margin-bottom: 10px;
 }
+}
+
+
 </style>
