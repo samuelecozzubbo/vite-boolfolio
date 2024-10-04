@@ -10,19 +10,27 @@ import axios from 'axios';
                     current_page:1,
                     links:[],
                 },
+            types:[],
           }
         },
         methods:{
-          getApi(apiUrl){
+          getApi(apiUrl,type='projects'){
             this.isLoading = true;
             axios.get(apiUrl)
             .then(result=>{
-              this.projects = result.data.results.data;
-              this.isLoading = false;
-              //paginator
-              this.paginatorData.current_page = result.data.results.current_page;
-              this.paginatorData.links = result.data.results.links;
-              console.log(this.projects);
+              console.log(result.data);
+              if(type== 'projects'){
+                this.projects = result.data.results.data;
+                this.isLoading = false;
+                //paginator
+                this.paginatorData.current_page = result.data.results.current_page;
+                this.paginatorData.links = result.data.results.links;
+                console.log(this.projects);
+              }else{
+                this[type]=result.data;
+              }
+              
+              
             })
             .catch(error=>{
               console.error('Errore durante la chiamata API:',error);
@@ -30,7 +38,9 @@ import axios from 'axios';
           }
         },
         mounted(){
-          this.getApi('http://127.0.0.1:8000/api');
+          this.getApi('http://127.0.0.1:8000/api','projects');
+          this.getApi('http://127.0.0.1:8000/api/types','types');
+
         }
     }
     
@@ -62,7 +72,10 @@ import axios from 'axios';
         <div class="attributes">
           <div class="types box">
             <ul>Tipi
-              <li>tipo</li>
+              <li v-for="type in types" :key="type.id">
+                {{ type.name }}
+              </li>
+
             </ul>
           </div>
           <div class="technologies box">
